@@ -66,7 +66,8 @@ function makeGuess() {
 
 function updateGuessContainer(guess) {
     const guessContainer = document.getElementById('guess-container');
-    guessContainer.innerHTML = '';
+    const row = document.createElement('div');
+    row.classList.add('guess-row');
     for (let i = 0; i < 5; i++) {
         const guessBox = document.createElement('div');
         guessBox.classList.add('guess-box');
@@ -76,8 +77,9 @@ function updateGuessContainer(guess) {
             guessBox.classList.add('present');
         }
         guessBox.textContent = guess[i];
-        guessContainer.appendChild(guessBox);
+        row.appendChild(guessBox);
     }
+    guessContainer.appendChild(row);
 }
 
 function endGame(win) {
