@@ -37,6 +37,8 @@ function startGame() {
     clearInterval(timerInterval);
     timerInterval = setInterval(updateTimer, 1000);
     console.log(currentWord); // Remove this line in production
+    document.getElementById('word-input').setAttribute('maxlength', currentWord.length);
+    document.getElementById('word-input').setAttribute('placeholder', `Guess a ${currentWord.length}-letter word...`);
 }
 
 function updateTimer() {
@@ -49,8 +51,8 @@ function updateTimer() {
 
 function makeGuess() {
     const guess = document.getElementById('word-input').value.trim().toLowerCase();
-    if (guess.length !== 5) {
-        alert('Please enter a 5-letter word.');
+    if (guess.length !== currentWord.length) {
+        alert(`Please enter a ${currentWord.length}-letter word.`);
         return;
     }
     guesses++;
@@ -68,7 +70,8 @@ function updateGuessContainer(guess) {
     const guessContainer = document.getElementById('guess-container');
     const row = document.createElement('div');
     row.classList.add('guess-row');
-    for (let i = 0; i < 5; i++) {
+
+    for (let i = 0; i < guess.length; i++) {
         const guessBox = document.createElement('div');
         guessBox.classList.add('guess-box');
         if (guess[i] === currentWord[i]) {
