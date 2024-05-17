@@ -59,24 +59,35 @@ function updateGuessContainer(guess) {
 
     const currentWordArray = currentWord.split('');
     const guessArray = guess.split('');
-    const guessResult = [];
 
-    for (let i = 0; i < guessArray.length; i++) {
-        const guessBox = document.createElement('div');
-        guessBox.classList.add('guess-box');
-        guessBox.textContent = guessArray[i];
+    const letterCount = {};
 
-        if (guessArray[i] === currentWordArray[i]) {
-            guessBox.classList.add('correct');
-            guessResult.push('correct');
-        } else if (currentWordArray.includes(guessArray[i])) {
-            guessBox.classList.add('present');
-            guessResult.push('present');
+    // İlk turda doğru yerleştirilmiş harfleri kontrol et
+    for (let i = 0; i < currentWordArray.length; i++) {
+        if (currentWordArray[i] === guessArray[i]) {
+            const guessBox = document.createElement('div');
+            guessBox.classList.add('guess-box', 'correct');
+            guessBox.textContent = guessArray[i];
+            row.appendChild(guessBox);
+            letterCount[currentWordArray[i]] = (letterCount[currentWordArray[i]] || 0) + 1;
         } else {
-            guessResult.push('incorrect');
+            const guessBox = document.createElement('div');
+            guessBox.classList.add('guess-box');
+            guessBox.textContent = guessArray[i];
+            row.appendChild(guessBox);
         }
-        row.appendChild(guessBox);
     }
+
+    // İkinci turda yanlış yerleştirilmiş harfleri kontrol et
+    for (let i = 0; i < currentWordArray.length; i++) {
+        if (currentWordArray[i] !== guessArray[i]) {
+            if (currentWordArray.includes(guessArray[i]) && (letterCount[guessArray[i]] || 0) < currentWordArray.filter(letter => letter === guessArray[i]).length) {
+                row.children[i].classList.add('present');
+                letterCount[guessArray[i]] = (letterCount[guessArray[i]] || 0) + 1;
+            }
+        }
+    }
+
     guessContainer.appendChild(row);
 }
 
