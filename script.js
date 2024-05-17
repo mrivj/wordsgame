@@ -13,12 +13,12 @@ document.getElementById('word-input').addEventListener('keypress', function(even
 const popup = document.getElementById('popup');
 const closeBtn = document.querySelector('.close');
 
-// Show the popup when the page loads
+
 window.onload = function() {
     popup.style.display = 'block';
 };
 
-// Close the popup when the user clicks on <span> (x)
+
 closeBtn.onclick = function() {
     popup.style.display = 'none';
 };
@@ -62,7 +62,7 @@ function updateGuessContainer(guess) {
 
     const letterCount = {};
 
-    // İlk turda doğru yerleştirilmiş harfleri kontrol et
+    
     for (let i = 0; i < currentWordArray.length; i++) {
         if (currentWordArray[i] === guessArray[i]) {
             const guessBox = document.createElement('div');
@@ -78,7 +78,7 @@ function updateGuessContainer(guess) {
         }
     }
 
-    // İkinci turda yanlış yerleştirilmiş harfleri kontrol et
+    
     for (let i = 0; i < currentWordArray.length; i++) {
         if (currentWordArray[i] !== guessArray[i]) {
             if (currentWordArray.includes(guessArray[i]) && (letterCount[guessArray[i]] || 0) < currentWordArray.filter(letter => letter === guessArray[i]).length) {
