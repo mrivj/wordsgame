@@ -60,12 +60,13 @@ function updateGuessContainer(guess) {
     for (let i = 0; i < guess.length; i++) {
         const guessBox = document.createElement('div');
         guessBox.classList.add('guess-box');
+        guessBox.textContent = guess[i];
+
         if (guess[i] === currentWord[i]) {
             guessBox.classList.add('correct');
         } else if (currentWord.includes(guess[i])) {
             guessBox.classList.add('present');
-        }
-        guessBox.textContent = guess[i];
+        } 
         row.appendChild(guessBox);
     }
     guessContainer.appendChild(row);
