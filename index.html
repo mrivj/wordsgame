@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Word Typing Game</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Wordle-like Guessing Game</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="game-container">
-        <h1>Advanced Word Typing Game</h1>
-        <div id="timer">Time: <span id="time">30</span>s</div>
-        <input type="text" id="word-input" placeholder="Type a word...">
-        <div id="score">Score: <span id="score-value">0</span></div>
+        <h1>Wordle-like Guessing Game</h1>
+        <div id="timer">Time: <span id="time">60</span>s</div>
+        <div id="guess-container"></div>
+        <input type="text" id="word-input" maxlength="5" placeholder="Guess a 5-letter word...">
+        <button id="guess-button">Guess</button>
+        <div id="message"></div>
         <button id="start-button">Start Game</button>
     </div>
 
@@ -23,7 +25,7 @@
         </div>
     </div>
 
-    <script src="/word.js"></script>
-    <script src="/script.js"></script>
+    <script src="words.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
