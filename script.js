@@ -1,10 +1,16 @@
-let time = 30;
-let score = 0;
+let time = 60;
 let timerInterval;
-let currentWordIndex = 0;
+let currentWord = '';
+let guesses = 0;
+const maxGuesses = 4;
 
 document.getElementById('start-button').addEventListener('click', startGame);
-document.getElementById('word-input').addEventListener('input', checkWord);
+document.getElementById('guess-button').addEventListener('click', makeGuess);
+document.getElementById('word-input').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        makeGuess();
+    }
+});
 
 const popup = document.getElementById('popup');
 const closeBtn = document.querySelector('.close');
@@ -20,41 +26,66 @@ closeBtn.onclick = function() {
 };
 
 function startGame() {
-    time = 30;
-    score = 0;
-    currentWordIndex = 0;
+    time = 60;
+    guesses = 0;
     document.getElementById('time').textContent = time;
-    document.getElementById('score-value').textContent = score;
+    document.getElementById('message').textContent = '';
     document.getElementById('word-input').value = '';
     document.getElementById('word-input').disabled = false;
-    document.getElementById('word-input').focus();
+    document.getElementById('guess-container').innerHTML = '';
+    currentWord = words[Math.floor(Math.random() * words.length)];
     clearInterval(timerInterval);
     timerInterval = setInterval(updateTimer, 1000);
-    displayNewWord();
+    console.log(currentWord); // Remove this line in production
 }
 
 function updateTimer() {
     time--;
     document.getElementById('time').textContent = time;
     if (time === 0) {
-        clearInterval(timerInterval);
-        document.getElementById('word-input').disabled = true;
-        alert('Time is up! Your score is ' + score);
+        endGame(false);
     }
 }
 
-function checkWord() {
-    const word = document.getElementById('word-input').value.trim().toLowerCase();
-    if (word === words[currentWordIndex]) {
-        score++;
-        document.getElementById('score-value').textContent = score;
+function makeGuess() {
+    const guess = document.getElementById('word-input').value.trim().toLowerCase();
+    if (guess.length !== 5) {
+        alert('Please enter a 5-letter word.');
+        return;
+    }
+    guesses++;
+    updateGuessContainer(guess);
+    if (guess === currentWord) {
+        endGame(true);
+    } else if (guesses >= maxGuesses) {
+        endGame(false);
+    } else {
         document.getElementById('word-input').value = '';
-        displayNewWord();
     }
 }
 
-function displayNewWord() {
-    currentWordIndex = Math.floor(Math.random() * words.length);
-    const newWord = words[currentWordIndex];
-    document.getElementById('word-input').setAttribute('placeholder', `Type: ${newWord}`);
+function updateGuessContainer(guess) {
+    const guessContainer = document.getElementById('guess-container');
+    guessContainer.innerHTML = '';
+    for (let i = 0; i < 5; i++) {
+        const guessBox = document.createElement('div');
+        guessBox.classList.add('guess-box');
+        if (guess[i] === currentWord[i]) {
+            guessBox.classList.add('correct');
+        } else if (currentWord.includes(guess[i])) {
+            guessBox.classList.add('present');
+        }
+        guessBox.textContent = guess[i];
+        guessContainer.appendChild(guessBox);
+    }
+}
+
+function endGame(win) {
+    clearInterval(timerInterval);
+    document.getElementById('word-input').disabled = true;
+    if (win) {
+        document.getElementById('message').textContent = 'Congratulations! You guessed the word!';
+    } else {
+        document.getElementById('message').textContent = `Time's up! The word was: ${currentWord}`;
+    }
 }
