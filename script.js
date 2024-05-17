@@ -57,16 +57,24 @@ function updateGuessContainer(guess) {
     const row = document.createElement('div');
     row.classList.add('guess-row');
 
-    for (let i = 0; i < guess.length; i++) {
+    const currentWordArray = currentWord.split('');
+    const guessArray = guess.split('');
+    const guessResult = [];
+
+    for (let i = 0; i < guessArray.length; i++) {
         const guessBox = document.createElement('div');
         guessBox.classList.add('guess-box');
-        guessBox.textContent = guess[i];
+        guessBox.textContent = guessArray[i];
 
-        if (guess[i] === currentWord[i]) {
+        if (guessArray[i] === currentWordArray[i]) {
             guessBox.classList.add('correct');
-        } else if (currentWord.includes(guess[i])) {
+            guessResult.push('correct');
+        } else if (currentWordArray.includes(guessArray[i])) {
             guessBox.classList.add('present');
-        } 
+            guessResult.push('present');
+        } else {
+            guessResult.push('incorrect');
+        }
         row.appendChild(guessBox);
     }
     guessContainer.appendChild(row);
