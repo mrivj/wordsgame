@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Word Typing Game</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Advanced Word Typing Game</h1>
+        <div id="timer">Time: <span id="time">30</span>s</div>
+        <input type="text" id="word-input" placeholder="Type a word...">
+        <div id="score">Score: <span id="score-value">0</span></div>
+        <button id="start-button">Start Game</button>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <p>Kelime haznene güveniyorsan demek ki buradasındır. Haydi başlayalım!</p>
+        </div>
+    </div>
+
+    <script src="/word.js"></script>
+    <script src="/script.js"></script>
+</body>
+</html>
