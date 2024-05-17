@@ -1,8 +1,6 @@
-let time = 60;
-let timerInterval;
-let currentWord = '';
 let guesses = 0;
-const maxGuesses = 4;
+const maxGuesses = 5;
+let currentWord = '';
 
 document.getElementById('start-button').addEventListener('click', startGame);
 document.getElementById('guess-button').addEventListener('click', makeGuess);
@@ -26,27 +24,15 @@ closeBtn.onclick = function() {
 };
 
 function startGame() {
-    time = 60;
     guesses = 0;
-    document.getElementById('time').textContent = time;
     document.getElementById('message').textContent = '';
     document.getElementById('word-input').value = '';
     document.getElementById('word-input').disabled = false;
     document.getElementById('guess-container').innerHTML = '';
     currentWord = words[Math.floor(Math.random() * words.length)];
-    clearInterval(timerInterval);
-    timerInterval = setInterval(updateTimer, 1000);
     console.log(currentWord); // Remove this line in production
     document.getElementById('word-input').setAttribute('maxlength', currentWord.length);
     document.getElementById('word-input').setAttribute('placeholder', `Guess a ${currentWord.length}-letter word...`);
-}
-
-function updateTimer() {
-    time--;
-    document.getElementById('time').textContent = time;
-    if (time === 0) {
-        endGame(false);
-    }
 }
 
 function makeGuess() {
@@ -86,11 +72,10 @@ function updateGuessContainer(guess) {
 }
 
 function endGame(win) {
-    clearInterval(timerInterval);
     document.getElementById('word-input').disabled = true;
     if (win) {
         document.getElementById('message').textContent = 'Congratulations! You guessed the word!';
     } else {
-        document.getElementById('message').textContent = `Time's up! The word was: ${currentWord}`;
+        document.getElementById('message').textContent = `No more guesses left! The word was: ${currentWord}`;
     }
 }
